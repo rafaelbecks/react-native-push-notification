@@ -227,7 +227,7 @@ public class RNPushNotificationHelper {
             }
 
             if(messagesArray != null){
-                int randomIndex = new Random().nextInt((messagesArray.size() - 0) + 1) + 0;
+                int randomIndex = new Random().nextInt(((messagesArray.size() - 1)- 0) + 1) + 0;
                 notification.setContentText(messagesArray.get(randomIndex));
             } else {
                 notification.setContentText(bundle.getString("message"));
