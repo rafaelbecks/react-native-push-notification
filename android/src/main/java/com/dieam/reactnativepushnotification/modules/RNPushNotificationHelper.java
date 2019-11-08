@@ -26,7 +26,8 @@ import com.facebook.react.bridge.ReadableMap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-
+import java.util.Random;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static com.dieam.reactnativepushnotification.modules.RNPushNotification.LOG_TAG;
@@ -217,7 +218,20 @@ public class RNPushNotificationHelper {
                 notification.setGroup(group);
             }
 
-            notification.setContentText(bundle.getString("message"));
+            ArrayList<String> messagesArray = null;
+            
+            try {
+                messagesArray = bundle.getStringArrayList("messagesArray");
+            } catch (Exception e) {
+                Log.e(LOG_TAG, "Exception while converting messages to JSON object.", e);
+            }
+
+            if(messagesArray != null){
+                int randomIndex = new Random().nextInt((messagesArray.size() - 0) + 1) + 0;
+                notification.setContentText(messagesArray.get(randomIndex));
+            } else {
+                notification.setContentText(bundle.getString("message"));
+            }
 
             String largeIcon = bundle.getString("largeIcon");
 
