@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Random;
 
 import static com.dieam.reactnativepushnotification.modules.RNPushNotification.LOG_TAG;
 import static com.dieam.reactnativepushnotification.modules.RNPushNotificationAttributes.fromJson;
@@ -218,6 +219,20 @@ public class RNPushNotificationHelper {
             String group = bundle.getString("group");
             if (group != null) {
                 notification.setGroup(group);
+            }
+
+            JSONArray messagesArray = null;
+            
+            try {
+                messagesArray = bundle.getString("messagesArray") != null ? new JSONArray(bundle.getString("messagesArray")) : null;
+            } catch (JSONException e) {
+                Log.e(LOG_TAG, "Exception while converting messages to JSON object.", e);
+            }
+
+            int randomIndex = new Random().nextInt((actionsArray.length() - 0) + 1) + 0;
+
+            if(messagesArray != null){
+                notification.setContentText(messagesArray.getString(randomIndex));
             }
 
             notification.setContentText(bundle.getString("message"));
